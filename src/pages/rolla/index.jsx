@@ -6,10 +6,31 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+import { useState } from "react";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  // 1. put your rows into state
+  const [rows, setRows] = useState(mockDataTeam);
+
+  // 2. handle edits
+  const handleCellEditCommit = (params) => {
+    const { id, field, value } = params;
+    setRows((prev) =>
+      prev.map((row) =>
+        row.id === id
+          ? {
+              ...row,
+              [field]: value,    // overwrite the edited field
+            }
+          : row
+      )
+    );
+  };
+
+  
   const columns = [
     { field: "id", headerName: "ID" },
     {
@@ -24,6 +45,7 @@ const Team = () => {
       type: "number",
       headerAlign: "left",
       align: "left",
+      editable: true,
     },
     {
       field: "phone",
@@ -69,15 +91,13 @@ const Team = () => {
   ];
 
   return (
-    <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+    
+      
       <Box
-        m="40px 0 0 0"
-        height="75vh"
+        m="-22px 800px 0px 0px"
+        height="60vh"
         sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
+          
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },
@@ -93,16 +113,20 @@ const Team = () => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.blueAccent[900],
           },
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid
+         rows={mockDataTeam}
+         columns={columns}
+          onCellEditCommit={handleCellEditCommit}
+         />
       </Box>
-    </Box>
+   
   );
 };
 
