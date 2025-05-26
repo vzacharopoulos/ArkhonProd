@@ -1,5 +1,5 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box, Typography, useTheme, TextField, Button, Stack } from "@mui/material";
+import { DataGrid} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
@@ -8,6 +8,7 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 import { useState } from "react";
 import { multilineColumn, isKeyboardEvent, GridCellEditStopReasons } from '../../assets/enableMultilineEdit';
+
 
 const Team = () => {
   const theme = useTheme();
@@ -52,6 +53,24 @@ const Team = () => {
       field: "πλατος",
       headerName: "πλατος",
        type: "number",
+      
+    },
+    {
+      field: "βαρος",
+      headerName: "βαρος",
+      type: "number",
+      
+    },
+    {
+      field: "τρεχων βαρος",
+      headerName: "τρεχων βαρος",
+      type: "number",
+      
+    },
+    {
+      field: "χρωμα",
+      headerName: "χρωμα",
+      type: "number",
       
     },
     {
