@@ -7,6 +7,7 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 import { useState } from "react";
+import { multilineColumn, isKeyboardEvent, GridCellEditStopReasons } from '../../assets/enableMultilineEdit';
 
 const Team = () => {
   const theme = useTheme();
@@ -29,33 +30,58 @@ const Team = () => {
       )
     );
   };
+  
 
   
   const columns = [
-    { field: "id", headerName: "ID" },
+    
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
+      field: "κωδικος",
+      headerName: "κωδικος",
+      flex: 2,
       cellClassName: "name-column--cell",
     },
+    
     {
-      field: "age",
-      headerName: "Age",
+      field: "παχος",
+      headerName: "παχος",
+      type: "number",
+      
+    },
+    {
+      field: "πλατος",
+      headerName: "πλατος",
+       type: "number",
+      
+    },
+    {
+      field: "ημερομηνια_εισαγωγης",
+      headerName: "ημερομηνια_εισαγωγης",
       type: "number",
       headerAlign: "left",
       align: "left",
       editable: true,
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "μηκος",
+      headerName: "μηκος",
       flex: 1,
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      editable: true,
     },
     {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
+      field: "σχολια",
+      headerName: "σχολια",
+      flex: 3,
+      editable: true,
+      ...multilineColumn,
+    },
+    {
+      field: "α_κ",
+      headerName: "α_κ",
+      
     },
     {
       field: "accessLevel",
@@ -94,7 +120,7 @@ const Team = () => {
     
       
       <Box
-        m="-22px 800px 0px 0px"
+        m="0px 500px 0px 0px"
         height="60vh"
         sx={{
           
@@ -123,7 +149,18 @@ const Team = () => {
         <DataGrid
          rows={mockDataTeam}
          columns={columns}
-          onCellEditCommit={handleCellEditCommit}
+          
+           onCellEditCommit={handleCellEditCommit}
+         onCellEditStop={(params, event) => {
+          if(params.field !== 'σχολια') return
+          if (params.reason !== GridCellEditStopReasons.enterKeyDown) return;
+
+         if (isKeyboardEvent(event) && !event.ctrlKey && !event.metaKey ) {
+         event.defaultMuiPrevented = true;
+         }
+          }
+         
+        }
          />
       </Box>
    
